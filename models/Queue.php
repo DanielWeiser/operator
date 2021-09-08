@@ -24,7 +24,6 @@ class Queue extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['service_id'], 'required'],
             [['service_id'], 'integer'],
             [
                 'service_id',

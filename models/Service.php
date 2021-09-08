@@ -27,7 +27,6 @@ class Service extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['name', 'duration'], 'required'],
             [['name'], 'string'],
             [['duration'], 'integer'],
         ];

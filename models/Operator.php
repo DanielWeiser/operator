@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
 /**
  * @property int $id
  * @property string $name
- * @property int $start_service_at
+ * @property int $end_service_at
  */
 class Operator extends ActiveRecord
 {
@@ -27,9 +27,8 @@ class Operator extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['name'], 'required'],
             [['name'], 'string'],
-            [['start_service_at'], 'integer'],
+            [['end_service_at'], 'integer'],
         ];
     }
 
@@ -40,7 +39,7 @@ class Operator extends ActiveRecord
     {
         return [
             'name' => 'Operator name',
-            'start_service_at' => 'Service start time',
+            'end_service_at' => 'Service end time',
         ];
     }
 
@@ -51,5 +50,13 @@ class Operator extends ActiveRecord
     {
         return $this->hasMany(Service::class, ['id' => 'service_id'])
             ->viaTable('operator_service', ['operator_id' => 'id']);
+    }
+
+    /**
+     * @return array|ActiveRecord|null
+     */
+    public static function getFreeOperator(ActiveQuery $operators)
+    {
+        return $operators->where(['<', 'end_service_at', strtotime('now')])->one();
     }
 }

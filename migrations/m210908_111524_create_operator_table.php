@@ -15,7 +15,7 @@ class m210908_111524_create_operator_table extends Migration
         $this->createTable('{{%operator}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
-            'start_service_at' => $this->integer(),
+            'end_service_at' => $this->integer()->notNull()->defaultValue(strtotime('now')),
         ]);
     }
 
